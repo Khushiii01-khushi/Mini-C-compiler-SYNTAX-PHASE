@@ -21,3 +21,88 @@ Term -> Term '*' Factor
      | Factor
 
 Factor -> ID | NUM | '(' Expr ')'
+------------------ MINI C SYNTAX GRAMMAR & PARSE TREES ------------------
+
+1) Grammar Rules (BNF-like format)
+
+Program      -> StmtList
+StmtList     -> StmtList Stmt | Stmt
+Stmt         -> AssignStmt | IfStmt | WhileStmt
+
+AssignStmt   -> ID '=' Expr ';'
+
+IfStmt       -> 'if' '(' Expr ')' Stmt [ 'else' Stmt ]
+WhileStmt    -> 'while' '(' Expr ')' Stmt
+
+Expr         -> Expr '+' Term
+             | Expr '-' Term
+             | Term
+
+Term         -> Term '*' Factor
+             | Term '/' Factor
+             | Factor
+
+Factor       -> ID | NUM | '(' Expr ')'
+
+-------------------------------------------------------------------------------
+2) Example 1 - Simple assignment with addition
+
+Example input:
+x = y + z;
+
+Parse Tree (text-art):
+
+        =
+      /   \
+     x     +
+          / \
+         y   z
+
+Explanation:
+- Root is '=' (assignment).
+- Left child is identifier 'x'.
+- Right child is expression 'y + z' with '+' as its root and 'y', 'z' as children.
+
+-------------------------------------------------------------------------------
+3) Example 2 - Operator precedence: multiplication has higher precedence
+
+Example input:
+a = b + c * d;
+
+Parse Tree (text-art):
+
+           =
+         /   \
+        a     +
+             / \
+            b   *
+               / \
+              c   d
+
+Explanation:
+- '*' is evaluated before '+', so subtree (c * d) is right child of '+'.
+- Parse tree shows correct grouping: (b + (c * d)).
+
+-------------------------------------------------------------------------------
+4) Example 3 - If statement with assignment inside
+
+Example input:
+if (x) y = z;
+
+Parse Tree (text-art):
+
+            if
+           /  \
+         (x)  stmt
+               \
+                =
+               / \
+              y   z
+
+Explanation:
+- 'if' node with condition (x) and a statement subtree (assignment y = z).
+
+-------------------------------------------------------------------------------
+Author: Khushi V
+Role: Syntax Phase (Grammar & Parse Tree examples)
+-------------------------------------------------------------------------------
