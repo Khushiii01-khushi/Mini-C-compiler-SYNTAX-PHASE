@@ -1,0 +1,23 @@
+Program -> DeclList
+DeclList -> DeclList Decl | Decl
+Decl -> Type ID ';'
+Type -> 'int' | 'float'
+
+StmtList -> StmtList Stmt | Stmt
+Stmt -> AssignStmt | IfStmt | WhileStmt
+
+AssignStmt -> ID '=' Expr ';'
+
+IfStmt -> 'if' '(' Expr ')' Stmt ['else' Stmt]
+
+WhileStmt -> 'while' '(' Expr ')' Stmt
+
+Expr -> Expr '+' Term
+     | Expr '-' Term
+     | Term
+
+Term -> Term '*' Factor
+     | Term '/' Factor
+     | Factor
+
+Factor -> ID | NUM | '(' Expr ')'
